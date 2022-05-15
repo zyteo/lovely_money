@@ -25,7 +25,6 @@ I'm also using the free version of firebase, and bringing it out to the masses m
 
 I might limit the app and share it with a few other users, though any abuse of the app and I can rid the account muahaha...
 
-
 ### Video showing App features
 
 ### Technology Used
@@ -37,7 +36,6 @@ Technologies used to build this project.
 - Firebase
 
 ```
-
 
 ### User story
 
@@ -52,22 +50,27 @@ To use the app, user should:
 ---
 
 ## Planning and Development Process
+
 Models:
 
--Items: item (string), price, currency, comment
+-Item list(string) example: FOOD, TRAVEL, GROCERIES
 
--Users: email (string), username (string), saved details
+-Transaction: item from item list (string), price, currency, comment, date, time, entry(credit/debit)
+
+-Users: email (string), username (string), saved default details [item, price, currency, entry]
 
 ```
 Timeline
 
 - 14 May: Set up new flutter project.
 
-- 15 May: Started planning for app. 
+- 15 May: Started planning for app.
 
 ```
+
 ---
-### MVP 
+
+### MVP
 
 - [ ] Register
 - [ ] Login
