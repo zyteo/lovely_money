@@ -10,8 +10,10 @@ class LovelyMoney extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lovely Money',
+      //theme default dark mode
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginScreen(),
       //route
