@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/screens/login.dart';
+import 'package:lovely_money/screens/register.dart';
 
 void main() {
   runApp(LovelyMoney());
@@ -19,6 +20,7 @@ class LovelyMoney extends StatelessWidget {
       //route
       routes: {
         LoginScreen.id: (context) => LoginScreen(),
+        RegisterScreen.id: (context) => RegisterScreen(),
       },
     );
   }
