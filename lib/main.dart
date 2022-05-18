@@ -1,8 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:lovely_money/screens/login.dart';
-import 'package:lovely_money/screens/register.dart';
+import 'package:lovely_money/screens/login_screen.dart';
+import 'package:lovely_money/screens/register_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "config.env");
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+        apiKey: dotenv.get('apiKey'),
+        authDomain: dotenv.get('authDomain'),
+        projectId: dotenv.get('projectId'),
+        storageBucket: dotenv.get('storageBucket'),
+        messagingSenderId: dotenv.get('messagingSenderId'),
+        appId: dotenv.get('appId'),
+        measurementId: dotenv.get('measurementId')),
+  );
+
   runApp(LovelyMoney());
 }
 
@@ -24,6 +40,4 @@ class LovelyMoney extends StatelessWidget {
       },
     );
   }
-  // This widget is the root of your application.
-
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:lovely_money/models/login.dart';
-import 'package:lovely_money/screens/register.dart';
+import 'package:lovely_money/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';

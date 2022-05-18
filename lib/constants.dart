@@ -18,6 +18,27 @@ InputDecoration kInputDecoration(String labelText) {
   );
 }
 
+//for showdialogue. takes in 3 arguments, context and 2 string
+Future<void> showDialogue(
+    BuildContext context, String title, String buttonText) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text(buttonText),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 const kTitleStyle = TextStyle(
   fontSize: 24,
   fontWeight: FontWeight.bold,

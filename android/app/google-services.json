@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "322991359272",
+    "project_id": "lovelymoney-36913",
+    "storage_bucket": "lovelymoney-36913.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322991359272:android:10dd6ab42a54528b13fc1d",
+        "android_client_info": {
+          "package_name": "com.example.lovely_money"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322991359272-2uqc8gis8808p8gvi9b33877r7cvkkt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjzkNLL4daGXFKl_ZnYx9tX5XR82smTs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322991359272-2uqc8gis8808p8gvi9b33877r7cvkkt6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322991359272:android:34fbbb746001a24c13fc1d",
+        "android_client_info": {
+          "package_name": "github.com.zyteo.lovelymoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322991359272-2uqc8gis8808p8gvi9b33877r7cvkkt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjzkNLL4daGXFKl_ZnYx9tX5XR82smTs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322991359272-2uqc8gis8808p8gvi9b33877r7cvkkt6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'register_screen';
@@ -13,6 +15,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _password;
   String? _email;
   String? _confirmPassword;
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: kPadding,
               child: TextFormField(
                 obscureText: true,
-                decoration: kInputDecoration('Password'),
+                decoration: kInputDecoration('Password (min 6 characters)'),
                 onChanged: (value) {
                   _password = value;
                 },
@@ -72,24 +76,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
             kSizedBoxMedium,
             ElevatedButton(
                 onPressed: () {
-                  
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return AlertDialog(
-                  //       title: Text('Password does not match'),
-                  //       content: Text('Please try again'),
-                  //       actions: <Widget>[
-                  //         ElevatedButton(
-                  //           child: Text('Ok'),
-                  //           onPressed: () {
-                  //             Navigator.pop(context);
-                  //           },
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // );
+                  //check if any of the 4 variables is null
+                  if (_username == null ||
+                      _email == null ||
+                      _password == null ||
+                      _confirmPassword == null) {
+                    //if so, show a dialogue box with a message of "please fill in all fields"
+                    showDialogue(context, 'Please fill in all fields', 'OK');
+                  } else {
+                    //if not, check if the password and confirm password are the same
+                    if (_confirmPassword == _password) {
+                      //if so, create a new user with the email and password
+                      _auth
+                          .createUserWithEmailAndPassword(
+                              email: _email.toString(), password: _password.toString())
+                          .then((value) {
+                        //if successful, show a dialogue box with a message of "user created"
+                        showDialogue(context, 'User created successfully', 'OK');
+                      }).catchError((error) {
+                        //account for diferent error cases
+                        if (error.code.toString() == 'invalid-email') {
+                          showDialogue(context, 'Please use a valid email', 'OK');
+                        } 
+                        else if (error.code.toString() == 'email-already-in-use') {
+                          showDialogue(context, 'Email already in use', 'OK');
+                        } else if (error.code.toString() == 'weak-password') {
+                          showDialogue(context, 'Password is too weak. Minimum of 6 characters.', 'OK');
+                        } else {
+                          showDialogue(context, 'Sorry, there was an error creating user', 'OK');
+                        }
+                        print(error.code.toString());
+                      });
+                    } else {
+                      showDialogue(context, 'Passwords does not match', 'OK');
+                    }
+                  }
                 },
                 child: Text('Register')),
             kSizedBoxSmall,

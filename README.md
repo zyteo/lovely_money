@@ -66,6 +66,8 @@ Timeline
 
 - 15 May: Started planning for app.
 
+- 18 May: Finally configured firebase stuff on flutter. Was more challenging than expected. Had to set up web version instead of flutter.
+
 ```
 
 ---
