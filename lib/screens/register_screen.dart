@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = 'register_screen';
@@ -45,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: TextFormField(
                 decoration: kInputDecoration('Email'),
                 onChanged: (value) {
-                  _email = value;
+                  _email = value.toLowerCase();
                 },
               ),
             ),
@@ -89,21 +90,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       //if so, create a new user with the email and password
                       _auth
                           .createUserWithEmailAndPassword(
-                              email: _email.toString(), password: _password.toString())
+                              email: _email.toString(),
+                              password: _password.toString())
                           .then((value) {
+                        //connect to firebase data and add a new collection, with the email as the key and the username as the value
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(_email.toString())
+                            .set({
+                          'username': _username.toString(),
+                        });
                         //if successful, show a dialogue box with a message of "user created"
-                        showDialogue(context, 'User created successfully', 'OK');
+                        showDialogue(
+                            context, 'User created successfully', 'OK');
                       }).catchError((error) {
                         //account for diferent error cases
                         if (error.code.toString() == 'invalid-email') {
-                          showDialogue(context, 'Please use a valid email', 'OK');
-                        } 
-                        else if (error.code.toString() == 'email-already-in-use') {
+                          showDialogue(
+                              context, 'Please use a valid email', 'OK');
+                        } else if (error.code.toString() ==
+                            'email-already-in-use') {
                           showDialogue(context, 'Email already in use', 'OK');
                         } else if (error.code.toString() == 'weak-password') {
-                          showDialogue(context, 'Password is too weak. Minimum of 6 characters.', 'OK');
+                          showDialogue(
+                              context,
+                              'Password is too weak. Minimum of 6 characters.',
+                              'OK');
                         } else {
-                          showDialogue(context, 'Sorry, there was an error creating user', 'OK');
+                          showDialogue(context,
+                              'Sorry, there was an error creating user', 'OK');
                         }
                         print(error.code.toString());
                       });

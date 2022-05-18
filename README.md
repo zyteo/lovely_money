@@ -68,6 +68,8 @@ Timeline
 
 - 18 May: Finally configured firebase stuff on flutter. Was more challenging than expected. Had to set up web version instead of flutter.
 
+Got register screen up and working with firebase. Able to register a user.
+
 ```
 
 ---
