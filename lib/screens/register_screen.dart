@@ -99,6 +99,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             .doc(_email.toString())
                             .set({
                           'username': _username.toString(),
+                          'email': _email.toString(),
+                          'items': [
+                            'FOOD',
+                            'TRAVEL',
+                            'GROCERIES',
+                            'HEALTH',
+                            'GIFT',
+                            'TAXI',
+                            'TRANSPORT'
+                          ],
+                          'default': {
+                            'item': 'FOOD',
+                            'price': '5.00',
+                            'currency': 'SGD',
+                            'entry': 'DEBIT',
+                          },
                         });
                         //if successful, show a dialogue box with a message of "user created"
                         showDialogue(

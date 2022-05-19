@@ -53,11 +53,13 @@ To use the app, user should:
 
 Models:
 
--Item list(string) example: FOOD, TRAVEL, GROCERIES
+-Item list(string) example: FOOD, TRAVEL, GROCERIES, HEALTH, GIFT, TAXI, TRANSPORT
 
--Transaction: item from item list (string), price, currency, comment, date, time, entry(credit/debit)
+-Transaction: date, time, item from item list (string), currency, price, comment, entry(credit/debit)
 
--Users: email (string), username (string), saved default details [item, price, currency, entry]
+-Users: email (string), username (string), saved default details [item, price, currency, entry], item list
+
+-Transactions --> email --> month --> list of transactions in an array
 
 ```
 Timeline
@@ -69,6 +71,8 @@ Timeline
 - 18 May: Finally configured firebase stuff on flutter. Was more challenging than expected. Had to set up web version instead of flutter.
 
 Got register screen up and working with firebase. Able to register a user.
+
+- 19 May: Registering user now provides pre-configured values of 7 items and defaults.
 
 ```
 
