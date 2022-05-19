@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lovely_money/models/login.dart';
 import 'package:lovely_money/screens/login_screen.dart';
+import 'package:lovely_money/screens/main_screen.dart';
 import 'package:lovely_money/screens/register_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   await dotenv.load(fileName: "config.env");
@@ -25,19 +28,42 @@ void main() async {
 class LovelyMoney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Lovely Money',
-      //theme default dark mode
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    // return material app with multi provider
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => Login(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Lovely Money',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        initialRoute: LoginScreen.id,
+        routes: {
+          LoginScreen.id: (context) => LoginScreen(),
+          RegisterScreen.id: (context) => RegisterScreen(),
+          MainScreen.id: (context) => MainScreen(),
+        },
       ),
-      home: LoginScreen(),
-      //route
-      routes: {
-        LoginScreen.id: (context) => LoginScreen(),
-        RegisterScreen.id: (context) => RegisterScreen(),
-      },
     );
+
+    // return MaterialApp(
+    //   title: 'Lovely Money',
+    //   //theme default dark mode
+    //   theme: ThemeData(
+    //     primarySwatch: Colors.blue,
+    //     visualDensity: VisualDensity.adaptivePlatformDensity,
+    //   ),
+    //   home: LoginScreen(),
+    //   //route
+    //   routes: {
+    //     LoginScreen.id: (context) => LoginScreen(),
+    //     RegisterScreen.id: (context) => RegisterScreen(),
+    //     MainScreen.id: (context) => MainScreen(),
+    //   },
+    // );
   }
 }

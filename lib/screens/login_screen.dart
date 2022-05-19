@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:lovely_money/models/login.dart';
+import 'package:lovely_money/screens/main_screen.dart';
 import 'package:lovely_money/screens/register_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -27,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextFormField(
                 decoration: kInputDecoration('Email'),
                 onChanged: (value) {
-                  // do something with the email
-                  // use provider to update the email
+                  Provider.of<Login>(context, listen: false).email =
+                      value.toLowerCase();
                 },
               ),
             ),
@@ -39,15 +41,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 decoration: kInputDecoration('Password'),
                 onChanged: (value) {
-                  // do something with the email
-                  // use provider to update the email
+                  Provider.of<Login>(context, listen: false).password = value;
                 },
               ),
             ),
             kSizedBoxMedium,
             ElevatedButton(
                 onPressed: () {
-                  print('object');
+                  Login()
+                      .login(Provider.of<Login>(context, listen: false).email,
+                          Provider.of<Login>(context, listen: false).password)
+                      .then((value) {
+                    Navigator.pushNamed(context, MainScreen.id);
+                  });
                 },
                 child: Text('Login')),
             kSizedBoxSmall,

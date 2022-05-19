@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class Login extends ChangeNotifier {
@@ -24,8 +25,14 @@ class Login extends ChangeNotifier {
     notifyListeners();
   }
 
-  // login function
-  void login() {
-    print('login');
+  // login function that takes email and password and connect to firebase
+  Future login(email, password) async {
+    try {
+      //login and then print value of successful login
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+    } catch (error) {
+      print(error);
+    }
   }
 }

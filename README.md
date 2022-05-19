@@ -74,6 +74,8 @@ Got register screen up and working with firebase. Able to register a user.
 
 - 19 May: Registering user now provides pre-configured values of 7 items and defaults.
 
+Set up login function, but not account for wrong password yet.
+
 ```
 
 ---

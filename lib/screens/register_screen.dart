@@ -119,6 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //if successful, show a dialogue box with a message of "user created"
                         showDialogue(
                             context, 'User created successfully', 'OK');
+                        Navigator.pop(context);
                       }).catchError((error) {
                         //account for diferent error cases
                         if (error.code.toString() == 'invalid-email') {
