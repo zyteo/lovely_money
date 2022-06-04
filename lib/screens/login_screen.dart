@@ -48,12 +48,10 @@ class _LoginScreenState extends State<LoginScreen> {
             kSizedBoxMedium,
             ElevatedButton(
                 onPressed: () {
-                  Login()
-                      .login(Provider.of<Login>(context, listen: false).email,
-                          Provider.of<Login>(context, listen: false).password)
-                      .then((value) {
-                    Navigator.pushNamed(context, MainScreen.id);
-                  });
+                  Login().login(
+                      context,
+                      Provider.of<Login>(context, listen: false).email,
+                      Provider.of<Login>(context, listen: false).password);
                 },
                 child: Text('Login')),
             kSizedBoxSmall,

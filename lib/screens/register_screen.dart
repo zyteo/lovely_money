@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -119,7 +118,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //if successful, show a dialogue box with a message of "user created"
                         showDialogue(
                             context, 'User created successfully', 'OK');
-                        Navigator.pop(context);
                       }).catchError((error) {
                         //account for diferent error cases
                         if (error.code.toString() == 'invalid-email') {
@@ -137,7 +135,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           showDialogue(context,
                               'Sorry, there was an error creating user', 'OK');
                         }
-                        print(error.code.toString());
                       });
                     } else {
                       showDialogue(context, 'Passwords does not match', 'OK');

@@ -74,7 +74,11 @@ Got register screen up and working with firebase. Able to register a user.
 
 - 19 May: Registering user now provides pre-configured values of 7 items and defaults.
 
-Set up login function, but not account for wrong password yet.
+Set up login function, but not accounting for wrong password/email etc yet.
+
+- 4 Jun: Refine login function to account for wrong email / password cases.
+
+Now register and login function are both fully complete and working.
 
 ```
 
@@ -82,6 +86,6 @@ Set up login function, but not account for wrong password yet.
 
 ### MVP
 
-- [ ] Register
-- [ ] Login
+- [x] Register
+- [x] Login
 - [ ] Homepage
