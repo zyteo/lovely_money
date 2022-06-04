@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lovely_money/constants.dart';
-import 'package:lovely_money/screens/main_screen.dart';
+import 'package:lovely_money/screens/dashboard_screen.dart';
 
 class Login extends ChangeNotifier {
   String? _username;
@@ -33,7 +33,7 @@ class Login extends ChangeNotifier {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        Navigator.pushNamed(context, MainScreen.id);
+        Navigator.pushNamed(context, DashboardScreen.id);
       }).catchError((error) {
         //account for diferent error cases
         if (error.code.toString() == 'wrong-password') {

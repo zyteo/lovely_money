@@ -80,6 +80,8 @@ Set up login function, but not accounting for wrong password/email etc yet.
 
 Now register and login function are both fully complete and working.
 
+Added datetime constants and created button for user to choose the date.
+
 ```
 
 ---

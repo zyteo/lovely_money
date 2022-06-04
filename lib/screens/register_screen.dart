@@ -106,7 +106,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             'HEALTH',
                             'GIFT',
                             'TAXI',
-                            'TRANSPORT'
+                            'TRANSPORT',
+                            'SALARY',
+                            'INTEREST'
                           ],
                           'default': {
                             'item': 'FOOD',

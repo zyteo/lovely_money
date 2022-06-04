@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lovely_money/models/login.dart';
 import 'package:lovely_money/screens/login_screen.dart';
-import 'package:lovely_money/screens/main_screen.dart';
+import 'package:lovely_money/screens/dashboard_screen.dart';
 import 'package:lovely_money/screens/register_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -41,29 +41,14 @@ class LovelyMoney extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: LoginScreen.id,
+        // initialRoute: LoginScreen.id,
+        initialRoute: DashboardScreen.id,
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           RegisterScreen.id: (context) => RegisterScreen(),
-          MainScreen.id: (context) => MainScreen(),
+          DashboardScreen.id: (context) => DashboardScreen(),
         },
       ),
     );
-
-    // return MaterialApp(
-    //   title: 'Lovely Money',
-    //   //theme default dark mode
-    //   theme: ThemeData(
-    //     primarySwatch: Colors.blue,
-    //     visualDensity: VisualDensity.adaptivePlatformDensity,
-    //   ),
-    //   home: LoginScreen(),
-    //   //route
-    //   routes: {
-    //     LoginScreen.id: (context) => LoginScreen(),
-    //     RegisterScreen.id: (context) => RegisterScreen(),
-    //     MainScreen.id: (context) => MainScreen(),
-    //   },
-    // );
   }
 }

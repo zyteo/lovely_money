@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:lovely_money/models/login.dart';
-import 'package:lovely_money/screens/main_screen.dart';
+import 'package:lovely_money/screens/dashboard_screen.dart';
 import 'package:lovely_money/screens/register_screen.dart';
 import 'package:provider/provider.dart';
 
