@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lovely_money/models/dashboard.dart';
 import 'package:lovely_money/models/login.dart';
 import 'package:lovely_money/screens/login_screen.dart';
 import 'package:lovely_money/screens/dashboard_screen.dart';
@@ -28,12 +29,19 @@ void main() async {
 class LovelyMoney extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return material app with multi provider
+    // return material app with multi provider, now with login and dashboard as providers, both use changenotifierprovider
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => Login(),
         ),
+        // ChangeNotifierProxyProvider<Login, Dashboard>(
+        //   create: (context) => Dashboard(),
+        //   update: (context, login, dashboard) {
+        //     dashboard.email = login.email;
+        //     return dashboard;
+        //   },
+        // ),
       ],
       child: MaterialApp(
         title: 'Lovely Money',
@@ -41,14 +49,38 @@ class LovelyMoney extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // initialRoute: LoginScreen.id,
-        initialRoute: DashboardScreen.id,
+        home: DashboardScreen(),
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           RegisterScreen.id: (context) => RegisterScreen(),
-          DashboardScreen.id: (context) => DashboardScreen(),
         },
       ),
     );
+
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(
+    //       create: (context) => Login(),
+    //     ),
+    //     // for dashboard
+    //     ChangeNotifierProvider(
+    //       create: (context) => Dashboard(),
+    //     ),
+    //   ],
+    //   child: MaterialApp(
+    //     title: 'Lovely Money',
+    //     theme: ThemeData(
+    //       primarySwatch: Colors.blue,
+    //       visualDensity: VisualDensity.adaptivePlatformDensity,
+    //     ),
+    //     initialRoute: LoginScreen.id,
+    //     // initialRoute: DashboardScreen.id,
+    //     routes: {
+    //       LoginScreen.id: (context) => LoginScreen(),
+    //       RegisterScreen.id: (context) => RegisterScreen(),
+    //       DashboardScreen.id: (context) => DashboardScreen(),
+    //     },
+    //   ),
+    // );
   }
 }

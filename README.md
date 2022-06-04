@@ -91,3 +91,5 @@ Added datetime constants and created button for user to choose the date.
 - [x] Register
 - [x] Login
 - [ ] Homepage
+- [ ] Settings
+- [ ] Add Transaction
