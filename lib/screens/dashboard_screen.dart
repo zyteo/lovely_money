@@ -21,6 +21,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String itemTransaction = '';
   String amountTransaction = '';
   String commentTransaction = '';
+  String userCurrency = "SGD";
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +99,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 });
                               },
                             ),
+                            DropdownButton(
+                              value: userCurrency,
+                              items: currenciesCode
+                                  .map((currency) => DropdownMenuItem(
+                                        child: Text(currency),
+                                        value: currency,
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  userCurrency = value.toString();
+                                });
+                              },
+                            ),
+
                             // Text field for amount, amount is to be numbers only, can be integers or float
                             TextField(
                               decoration: InputDecoration(

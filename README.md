@@ -84,6 +84,8 @@ Added datetime constants and created button for user to choose the date.
 
 - 9 Jul: Adding more functions to the add a transaction button - adjusted date picker, added time picker, adjusted amount and comment fields.
 
+Added another currencies code list to constants file so that a dropdown list can be used when adding transactions.
+
 ```
 
 ---
