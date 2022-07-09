@@ -35,13 +35,9 @@ class LovelyMoney extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Login(),
         ),
-        // ChangeNotifierProxyProvider<Login, Dashboard>(
-        //   create: (context) => Dashboard(),
-        //   update: (context, login, dashboard) {
-        //     dashboard.email = login.email;
-        //     return dashboard;
-        //   },
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => Dashboard(),
+        ),
       ],
       child: MaterialApp(
         title: 'Lovely Money',
@@ -49,10 +45,11 @@ class LovelyMoney extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: DashboardScreen(),
+        home: LoginScreen(),
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
           RegisterScreen.id: (context) => RegisterScreen(),
+          DashboardScreen.id: (context) => DashboardScreen(),
         },
       ),
     );

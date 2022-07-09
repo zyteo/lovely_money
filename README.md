@@ -55,7 +55,7 @@ Models:
 
 -Item list(string) example: FOOD, TRAVEL, GROCERIES, HEALTH, GIFT, TAXI, TRANSPORT
 
--Transaction: date, time, item from item list (string), currency, price, comment, entry(credit/debit)
+-Transaction: date, time, item from item list (string), currency, amount, comment, entry(credit/debit)
 
 -Users: email (string), username (string), saved default details [item, price, currency, entry], item list
 
@@ -81,6 +81,8 @@ Set up login function, but not accounting for wrong password/email etc yet.
 Now register and login function are both fully complete and working.
 
 Added datetime constants and created button for user to choose the date.
+
+- 9 Jul: Adding more functions to the add a transaction button - adjusted date picker, added time picker, adjusted amount and comment fields.
 
 ```
 

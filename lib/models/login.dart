@@ -6,7 +6,7 @@ import 'package:lovely_money/screens/dashboard_screen.dart';
 class Login extends ChangeNotifier {
   String? _username;
   String? _password;
-  String? _email = 'b@b.com';
+  String? _email;
 
   String? get username => _username;
   String? get password => _password;

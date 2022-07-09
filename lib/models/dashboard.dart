@@ -26,7 +26,7 @@ class Dashboard extends ChangeNotifier {
     _items = value;
     notifyListeners();
   }
-
+  
   set defaultTransaction(Map<String, String>? value) {
     _defaultTransaction = value;
     notifyListeners();
