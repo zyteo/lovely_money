@@ -86,6 +86,8 @@ Added datetime constants and created button for user to choose the date.
 
 Added another currencies code list to constants file so that a dropdown list can be used when adding transactions.
 
+Trying to adjust username on the dashboard screen
+
 ```
 
 ---

@@ -2,20 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lovely_money/constants.dart';
 import 'package:lovely_money/screens/dashboard_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends ChangeNotifier {
-  String? _username;
   String? _password;
   String? _email;
 
-  String? get username => _username;
   String? get password => _password;
   String? get email => _email;
-
-  set username(String? value) {
-    _username = value;
-    notifyListeners();
-  }
 
   set password(String? value) {
     _password = value;

@@ -47,4 +47,21 @@ class Dashboard extends ChangeNotifier {
       print(error);
     }
   }
+  // function to retrieve the username from firebase with email as input
+  Future retrieveUsername(email) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(email)
+          .get()
+          .then((value) {
+        _username = value.data()!['username'];
+        print(username);
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+ 
 }

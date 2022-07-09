@@ -18,19 +18,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String time = DateFormat('HH:mm').format(DateTime.now());
   var userSelectdate;
   var userSelectTime;
-  String itemTransaction = '';
+  String itemTransaction = "FOOD";
   String amountTransaction = '';
   String commentTransaction = '';
   String userCurrency = "SGD";
+  String userEntry = "DEBIT";
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<Dashboard>(context, listen: false).email =
+        Provider.of<Login>(context, listen: false).email;
+
+    // retrieveItems function
+    Provider.of<Dashboard>(context, listen: false)
+        .retrieveItems(Provider.of<Login>(context, listen: false).email);
+    // retrieveUsername function
+    Provider.of<Dashboard>(context, listen: false)
+        .retrieveUsername(Provider.of<Login>(context, listen: false).email);
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Hello, ${Provider.of<Login>(context, listen: false).email} ',
+            Text(
+                'Hello, ${Provider.of<Dashboard>(context, listen: false).username} ',
                 style: kTitleStyle),
             Text('Today is ${date} ', style: kTitleStyle),
 
@@ -137,25 +148,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 });
                               },
                             ),
-
+                            // dropdown button for debit or credit
+                            DropdownButton(
+                              value: userEntry,
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text('DEBIT'),
+                                  value: 'DEBIT',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('CREDIT'),
+                                  value: 'CREDIT',
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  userEntry = value.toString();
+                                });
+                              },
+                            ),
                             // add a dropdown list for the item picker using items from the dashboard model
-                            // DropdownButton<String>(
-                            //   value: itemTransaction,
-                            //   items:
-                            //       Provider.of<Dashboard>(context, listen: false)
-                            //           .items!
-                            //           .map((item) {
-                            //     return DropdownMenuItem<String>(
-                            //       value: item,
-                            //       child: Text(item),
-                            //     );
-                            //   }).toList(),
-                            //   onChanged: (value) {
-                            //     setState(() {
-                            //       itemTransaction = value!;
-                            //     });
-                            //   },
-                            // ),
+                            DropdownButton<String>(
+                              value: itemTransaction,
+                              items:
+                                  Provider.of<Dashboard>(context, listen: false)
+                                      .items!
+                                      .map((item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  itemTransaction = value!;
+                                });
+                              },
+                            ),
                           ],
                         ),
                         actions: <Widget>[
