@@ -96,6 +96,8 @@ Timeofday format changed so that Timeofday(xx) does not show after time picker i
 
 Added a function to get the default transaction details, to be used for add transaction screen.
 
+Replaced some widgets with consumer so that add transaction screen displays the default values. New problem arises, value can't be changed.
+
 ```
 
 ---

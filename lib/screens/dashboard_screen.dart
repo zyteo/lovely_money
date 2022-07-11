@@ -16,19 +16,15 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   String date = DateFormat('dd-MMM-yyyy').format(DateTime.now());
   String time = DateFormat('HH:mm').format(DateTime.now());
-  var userSelectdate;
+  var userSelectDate;
   var userSelectTime;
-  String itemTransaction = "FOOD";
-  String amountTransaction = '';
   String commentTransaction = '';
-  String userCurrency = "SGD";
   String userEntry = "DEBIT";
 
   @override
   Widget build(BuildContext context) {
     Provider.of<Dashboard>(context, listen: false).email =
         Provider.of<Login>(context, listen: false).email;
-
     // retrieveItems function
     Provider.of<Dashboard>(context, listen: false)
         .retrieveItems(Provider.of<Login>(context, listen: false).email);
@@ -38,6 +34,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // retrieve default transaction
     Provider.of<Dashboard>(context, listen: false).retrieveDefaultTransaction(
         Provider.of<Login>(context, listen: false).email);
+    String? itemTransaction;
+    String? amountTransaction;
+    String? userCurrency;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -64,12 +64,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              // label showing the userSelectdate
+                              // label showing the userSelectDate
                               Text(
                                 // the text will be date if userselectdate is null, othertwise it will be userseelectdate
-                                userSelectdate == null
+                                userSelectDate == null
                                     ? 'Date: $date'
-                                    : 'Date: $userSelectdate',
+                                    : 'Date: $userSelectDate',
                                 style: kTitleStyle,
                               ),
                               // for user to change date
@@ -83,10 +83,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     lastDate: DateTime(2025),
                                   ).then((date) {
                                     setState(() {
-                                      userSelectdate = date;
-                                      userSelectdate = DateFormat('dd-MMM-yyyy')
-                                          .format(userSelectdate);
-                                      print(userSelectdate);
+                                      userSelectDate = date;
+                                      userSelectDate = DateFormat('dd-MMM-yyyy')
+                                          .format(userSelectDate);
+                                      print(userSelectDate);
                                     });
                                   });
                                 },
@@ -115,31 +115,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   });
                                 },
                               ),
-                              DropdownButton(
-                                value: userCurrency,
-                                items: currenciesCode
-                                    .map((currency) => DropdownMenuItem(
-                                          child: Text(currency),
-                                          value: currency,
-                                        ))
-                                    .toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    userCurrency = value.toString();
-                                  });
-                                },
-                              ),
-
-                              // Text field for amount, amount is to be numbers only, can be integers or float
-                              TextField(
-                                decoration: InputDecoration(
-                                  labelText: 'Amount',
+                              // use consumer for this dropdown button to select the user currency, with items from currenciesCode in constants file
+                              Consumer<Dashboard>(
+                                builder: (context, dashboard, _) =>
+                                    DropdownButton(
+                                  value: userCurrency = dashboard.userDefaultCurrency,
+                                  items: currenciesCode
+                                      .map((currency) => DropdownMenuItem(
+                                            child: Text(currency),
+                                            value: currency,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      userCurrency = value.toString();
+                                    });
+                                  },
                                 ),
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  setState(() {
-                                    amountTransaction = value;
-                                  });
+                              ),
+                              // Use consumer for this text field with a controller for default amount value
+                              Consumer<Dashboard>(
+                                builder: (context, dashboard, child) {
+                                  return TextField(
+                                    controller: TextEditingController(
+                                        text: amountTransaction = dashboard.userDefaultPrice),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      labelText: 'Amount',
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        amountTransaction = value;
+                                      });
+                                    },
+                                  );
                                 },
                               ),
                               // Text field for comment, to be in string
@@ -173,23 +182,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                               ),
                               // add a dropdown list for the item picker using items from the dashboard model
-                              DropdownButton<String>(
-                                value: itemTransaction,
-                                items: Provider.of<Dashboard>(context,
-                                        listen: false)
-                                    .items!
-                                    .map((item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(item),
+                              // use consumer for the dropdown list for item picker using items from dashboard
+                              Consumer<Dashboard>(
+                                builder: (context, dashboard, child) {
+                                  return DropdownButton(
+                                    value: itemTransaction = dashboard.userDefaultItem,
+                                    items: dashboard.items!
+                                        .map((item) => DropdownMenuItem(
+                                              child: Text(item),
+                                              value: item,
+                                            ))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        itemTransaction = value.toString();
+                                      });
+                                    },
                                   );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    itemTransaction = value!;
-                                  });
                                 },
                               ),
+                              // DropdownButton<String>(
+                              //   value: itemTransaction,
+                              //   items: Provider.of<Dashboard>(context,
+                              //           listen: false)
+                              //       .items!
+                              //       .map((item) {
+                              //     return DropdownMenuItem<String>(
+                              //       value: item,
+                              //       child: Text(item),
+                              //     );
+                              //   }).toList(),
+                              //   onChanged: (value) {
+                              //     setState(() {
+                              //       itemTransaction = value!;
+                              //     });
+                              //   },
+                              // ),
                             ],
                           ),
                           actions: <Widget>[
