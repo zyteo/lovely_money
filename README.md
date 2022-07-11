@@ -92,6 +92,9 @@ Trying to adjust username on the dashboard screen.
 
 Timeofday format changed so that Timeofday(xx) does not show after time picker is selected.
 
+- 11 Jul: Removed default entry as credit/debit only has 2 options so I feel a default is not necessary.
+
+Added a function to get the default transaction details, to be used for add transaction screen.
 
 ```
 

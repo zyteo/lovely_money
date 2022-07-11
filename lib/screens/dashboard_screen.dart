@@ -35,6 +35,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // retrieveUsername function
     Provider.of<Dashboard>(context, listen: false)
         .retrieveUsername(Provider.of<Login>(context, listen: false).email);
+    // retrieve default transaction
+    Provider.of<Dashboard>(context, listen: false).retrieveDefaultTransaction(
+        Provider.of<Login>(context, listen: false).email);
     return Scaffold(
       body: Center(
         child: Column(

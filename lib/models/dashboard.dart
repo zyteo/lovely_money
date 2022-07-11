@@ -5,12 +5,18 @@ class Dashboard extends ChangeNotifier {
   String? _username;
   String? _email;
   List<dynamic>? _items;
-  Map<String, String>? _defaultTransaction;
+  Map<String, dynamic>? _defaultTransaction;
+  String? _userDefaultCurrency;
+  String? _userDefaultItem;
+  String? _userDefaultPrice;
 
   String? get username => _username;
   String? get email => _email;
   List<dynamic>? get items => _items;
-  Map<String, String>? get defaultTransaction => _defaultTransaction;
+  Map<String, dynamic>? get defaultTransaction => _defaultTransaction;
+  String? get userDefaultCurrency => _userDefaultCurrency;
+  String? get userDefaultItem => _userDefaultItem;
+  String? get userDefaultPrice => _userDefaultPrice;
 
   set username(String? value) {
     _username = value;
@@ -26,9 +32,24 @@ class Dashboard extends ChangeNotifier {
     _items = value;
     notifyListeners();
   }
-  
-  set defaultTransaction(Map<String, String>? value) {
+
+  set defaultTransaction(Map<String, dynamic>? value) {
     _defaultTransaction = value;
+    notifyListeners();
+  }
+
+  set userDefaultCurrency(String? value) {
+    _userDefaultCurrency = value;
+    notifyListeners();
+  }
+
+  set userDefaultItem(String? value) {
+    _userDefaultItem = value;
+    notifyListeners();
+  }
+
+  set userDefaultPrice(String? value) {
+    _userDefaultPrice = value;
     notifyListeners();
   }
 
@@ -47,6 +68,7 @@ class Dashboard extends ChangeNotifier {
       print(error);
     }
   }
+
   // function to retrieve the username from firebase with email as input
   Future retrieveUsername(email) async {
     try {
@@ -63,5 +85,26 @@ class Dashboard extends ChangeNotifier {
     }
   }
 
- 
+  // function to retrieve the default transaction from firebase with email as input
+  Future retrieveDefaultTransaction(email) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(email)
+          .get()
+          .then((value) {
+        _defaultTransaction = value.data()!['default'];
+        print(defaultTransaction);
+        // set the amount, price and item
+        userDefaultPrice = _defaultTransaction!['price'];
+        userDefaultItem = _defaultTransaction!['item'];
+        userDefaultCurrency = _defaultTransaction!['currency'];
+        print(userDefaultPrice);
+        print(userDefaultItem);
+        print(userDefaultCurrency);
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
 }

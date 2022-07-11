@@ -114,7 +114,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             'item': 'FOOD',
                             'price': '5.00',
                             'currency': 'SGD',
-                            'entry': 'DEBIT',
                           },
                         });
                         //if successful, show a dialogue box with a message of "user created"
