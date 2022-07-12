@@ -5,6 +5,7 @@ import 'package:lovely_money/models/login.dart';
 import 'package:lovely_money/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const String id = 'dashboard_screen';
@@ -20,6 +21,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var userSelectTime;
   String commentTransaction = '';
   String userEntry = "DEBIT";
+  String userAmount = '';
   @override
   Widget build(BuildContext context) {
     Provider.of<Dashboard>(context, listen: false).email =
@@ -131,42 +133,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   },
                                 ),
                               ),
-                              // Use consumer for this text field with a text controller for the amount value, with update to provider
-                              Consumer<Dashboard>(
-                                builder: (context, dashboard, _) => TextField(
-                                  controller: TextEditingController(
-                                      text: dashboard.userDefaultPrice),
-                                  decoration: InputDecoration(
-                                    labelText: 'Amount',
-                                  ),
-                                  onChanged: (value) {
-                                    // setState(() {
-                                    Provider.of<Dashboard>(context,
-                                            listen: false)
-                                        .userDefaultPrice = value;
-                                    // });
-                                  },
+                              // textformfield for amount, with a label for amount and a textformat for only numbers and inputformatter
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Amount',
                                 ),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}')),
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    userAmount = value;
+                                  });
+                                },
                               ),
-                              // Consumer<Dashboard>(
-                              //   builder: (context, dashboard, child) {
-                              //     return TextField(
-                              //       controller: TextEditingController(
-                              //           text: dashboard.userDefaultPrice),
-                              //       keyboardType: TextInputType.number,
-                              //       decoration: InputDecoration(
-                              //         labelText: 'Amount',
-                              //       ),
-                              //       onChanged: (value) {
-                              //         setState(() {
-                              //           Provider.of<Dashboard>(context,
-                              //                   listen: false)
-                              //               .userDefaultPrice = value;
-                              //         });
-                              //       },
-                              //     );
-                              //   },
-                              // ),
                               // Text field for comment, to be in string
                               TextField(
                                 decoration: InputDecoration(

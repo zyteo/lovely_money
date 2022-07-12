@@ -104,6 +104,10 @@ Consumer is for UI changes, while Provider is needed for the change in text valu
 
 https://stackoverflow.com/questions/58774301/when-to-use-provider-ofx-vs-consumerx-in-flutter
 
+Removed amount as default value as my text editing controller doesn't work properly and I realised it might be a bad UX for users - 
+
+if default value is not the user's amount, user needs to delete value before keying in, might annoy user with more keypresses.
+
 ```
 
 ---

@@ -8,7 +8,6 @@ class Dashboard extends ChangeNotifier {
   Map<String, dynamic>? _defaultTransaction;
   String? _userDefaultCurrency;
   String? _userDefaultItem;
-  String? _userDefaultPrice;
 
   String? get username => _username;
   String? get email => _email;
@@ -16,7 +15,6 @@ class Dashboard extends ChangeNotifier {
   Map<String, dynamic>? get defaultTransaction => _defaultTransaction;
   String? get userDefaultCurrency => _userDefaultCurrency;
   String? get userDefaultItem => _userDefaultItem;
-  String? get userDefaultPrice => _userDefaultPrice;
 
   set username(String? value) {
     _username = value;
@@ -45,11 +43,6 @@ class Dashboard extends ChangeNotifier {
 
   set userDefaultItem(String? value) {
     _userDefaultItem = value;
-    notifyListeners();
-  }
-
-  set userDefaultPrice(String? value) {
-    _userDefaultPrice = value;
     notifyListeners();
   }
 
@@ -94,14 +87,8 @@ class Dashboard extends ChangeNotifier {
           .get()
           .then((value) {
         _defaultTransaction = value.data()!['default'];
-        print(defaultTransaction);
-        // set the amount, price and item
-        userDefaultPrice = _defaultTransaction!['price'];
         userDefaultItem = _defaultTransaction!['item'];
         userDefaultCurrency = _defaultTransaction!['currency'];
-        print(userDefaultPrice);
-        print(userDefaultItem);
-        print(userDefaultCurrency);
       });
     } catch (error) {
       print(error);

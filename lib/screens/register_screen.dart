@@ -112,7 +112,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                           'default': {
                             'item': 'FOOD',
-                            'price': '5.00',
                             'currency': 'SGD',
                           },
                         });
