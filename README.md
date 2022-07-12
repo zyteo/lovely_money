@@ -98,6 +98,12 @@ Added a function to get the default transaction details, to be used for add tran
 
 Replaced some widgets with consumer so that add transaction screen displays the default values. New problem arises, value can't be changed.
 
+- 12 Jul: Managed to fix the frozen values by using Provider and Consumer together.
+
+Consumer is for UI changes, while Provider is needed for the change in text value.
+
+https://stackoverflow.com/questions/58774301/when-to-use-provider-ofx-vs-consumerx-in-flutter
+
 ```
 
 ---

@@ -20,7 +20,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var userSelectTime;
   String commentTransaction = '';
   String userEntry = "DEBIT";
-
   @override
   Widget build(BuildContext context) {
     Provider.of<Dashboard>(context, listen: false).email =
@@ -34,9 +33,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // retrieve default transaction
     Provider.of<Dashboard>(context, listen: false).retrieveDefaultTransaction(
         Provider.of<Login>(context, listen: false).email);
-    String? itemTransaction;
-    String? amountTransaction;
-    String? userCurrency;
 
     return Scaffold(
       body: Center(
@@ -54,7 +50,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ElevatedButton(
                 onPressed: () {
                   // create a popup with 3 input text and a button for selecting date, along with a ok and cancel button
-
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -119,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Consumer<Dashboard>(
                                 builder: (context, dashboard, _) =>
                                     DropdownButton(
-                                  value: userCurrency = dashboard.userDefaultCurrency,
+                                  value: dashboard.userDefaultCurrency,
                                   items: currenciesCode
                                       .map((currency) => DropdownMenuItem(
                                             child: Text(currency),
@@ -128,29 +123,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       .toList(),
                                   onChanged: (value) {
                                     setState(() {
-                                      userCurrency = value.toString();
+                                      Provider.of<Dashboard>(context,
+                                                  listen: false)
+                                              .userDefaultCurrency =
+                                          value.toString();
                                     });
                                   },
                                 ),
                               ),
-                              // Use consumer for this text field with a controller for default amount value
+                              // Use consumer for this text field with a text controller for the amount value, with update to provider
                               Consumer<Dashboard>(
-                                builder: (context, dashboard, child) {
-                                  return TextField(
-                                    controller: TextEditingController(
-                                        text: amountTransaction = dashboard.userDefaultPrice),
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      labelText: 'Amount',
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        amountTransaction = value;
-                                      });
-                                    },
-                                  );
-                                },
+                                builder: (context, dashboard, _) => TextField(
+                                  controller: TextEditingController(
+                                      text: dashboard.userDefaultPrice),
+                                  decoration: InputDecoration(
+                                    labelText: 'Amount',
+                                  ),
+                                  onChanged: (value) {
+                                    // setState(() {
+                                    Provider.of<Dashboard>(context,
+                                            listen: false)
+                                        .userDefaultPrice = value;
+                                    // });
+                                  },
+                                ),
                               ),
+                              // Consumer<Dashboard>(
+                              //   builder: (context, dashboard, child) {
+                              //     return TextField(
+                              //       controller: TextEditingController(
+                              //           text: dashboard.userDefaultPrice),
+                              //       keyboardType: TextInputType.number,
+                              //       decoration: InputDecoration(
+                              //         labelText: 'Amount',
+                              //       ),
+                              //       onChanged: (value) {
+                              //         setState(() {
+                              //           Provider.of<Dashboard>(context,
+                              //                   listen: false)
+                              //               .userDefaultPrice = value;
+                              //         });
+                              //       },
+                              //     );
+                              //   },
+                              // ),
                               // Text field for comment, to be in string
                               TextField(
                                 decoration: InputDecoration(
@@ -186,7 +202,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               Consumer<Dashboard>(
                                 builder: (context, dashboard, child) {
                                   return DropdownButton(
-                                    value: itemTransaction = dashboard.userDefaultItem,
+                                    value: dashboard.userDefaultItem,
                                     items: dashboard.items!
                                         .map((item) => DropdownMenuItem(
                                               child: Text(item),
@@ -195,29 +211,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         .toList(),
                                     onChanged: (value) {
                                       setState(() {
-                                        itemTransaction = value.toString();
+                                        Provider.of<Dashboard>(context,
+                                                listen: false)
+                                            .userDefaultItem = value.toString();
                                       });
                                     },
                                   );
                                 },
                               ),
-                              // DropdownButton<String>(
-                              //   value: itemTransaction,
-                              //   items: Provider.of<Dashboard>(context,
-                              //           listen: false)
-                              //       .items!
-                              //       .map((item) {
-                              //     return DropdownMenuItem<String>(
-                              //       value: item,
-                              //       child: Text(item),
-                              //     );
-                              //   }).toList(),
-                              //   onChanged: (value) {
-                              //     setState(() {
-                              //       itemTransaction = value!;
-                              //     });
-                              //   },
-                              // ),
                             ],
                           ),
                           actions: <Widget>[
