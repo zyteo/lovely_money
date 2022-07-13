@@ -100,22 +100,46 @@ class Dashboard extends ChangeNotifier {
   Future addTransaction(
       email, date, time, currency, item, amount, entry, comment) async {
     try {
+      // the document might not exist, if it doesnt exist, then set new, otherwise, update collection
       await FirebaseFirestore.instance
           .collection('transactions')
           .doc(email)
-          .set({
-        DateFormat('MM-yyyy').format(DateTime.now()): [
-          {
-            // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment
-            'date': date,
-            'time': time,
-            'currency': currency,
-            'item': item,
-            'amount': amount,
-            'entry': entry,
-            'comment': comment,
-          }
-        ],
+          .get()
+          .then((value) {
+        if (value.exists) {
+          FirebaseFirestore.instance
+              .collection('transactions')
+              .doc(email)
+              .update({
+            DateFormat('MM-yyyy').format(DateTime.now()): [
+              {
+                // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment
+                'date': date,
+                'time': time,
+                'currency': currency,
+                'item': item,
+                'amount': amount,
+                'entry': entry,
+                'comment': comment,
+              }
+            ],
+          });
+        } else {
+          FirebaseFirestore.instance.collection('transactions').doc(email).set({
+            DateFormat('MM-yyyy').format(DateTime.now()): [
+              {
+                // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment
+                'date': date,
+                'time': time,
+                'currency': currency,
+                'item': item,
+                'amount': amount,
+                'entry': entry,
+                'comment': comment,
+              }
+            ],
+          });
+        }
       });
     } catch (error) {
       print(error);
