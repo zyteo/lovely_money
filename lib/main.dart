@@ -53,31 +53,5 @@ class LovelyMoney extends StatelessWidget {
         },
       ),
     );
-
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider(
-    //       create: (context) => Login(),
-    //     ),
-    //     // for dashboard
-    //     ChangeNotifierProvider(
-    //       create: (context) => Dashboard(),
-    //     ),
-    //   ],
-    //   child: MaterialApp(
-    //     title: 'Lovely Money',
-    //     theme: ThemeData(
-    //       primarySwatch: Colors.blue,
-    //       visualDensity: VisualDensity.adaptivePlatformDensity,
-    //     ),
-    //     initialRoute: LoginScreen.id,
-    //     // initialRoute: DashboardScreen.id,
-    //     routes: {
-    //       LoginScreen.id: (context) => LoginScreen(),
-    //       RegisterScreen.id: (context) => RegisterScreen(),
-    //       DashboardScreen.id: (context) => DashboardScreen(),
-    //     },
-    //   ),
-    // );
   }
 }

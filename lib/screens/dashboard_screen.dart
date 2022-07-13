@@ -16,7 +16,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   String date = DateFormat('dd-MMM-yyyy').format(DateTime.now());
-  String time = DateFormat('HH:mm').format(DateTime.now());
+  String time = DateFormat('h:mm a').format(DateTime.now());
   var userSelectDate;
   var userSelectTime;
   String commentTransaction = '';
@@ -41,12 +41,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-                'Hello, ${Provider.of<Dashboard>(context, listen: false).username} ',
-                style: kTitleStyle),
-            Text('Today is ${date} ', style: kTitleStyle),
-
-            Text('Main Screen', style: kTitleStyle),
+            // use consumer widget for text to show username
+            Consumer<Dashboard>(
+              builder: (context, dashboard, child) {
+                return Text(
+                  'Hi, ${dashboard.username}! Today is $date, a ${DateFormat('EEEE').format(DateTime.now())}.',
+                  style: kTitleStyle,
+                );
+              },
+            ),
             kSizedBoxLarge,
             // button for date picker from 2022 to 2025, default is current date
             ElevatedButton(
@@ -106,8 +109,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ).then((time) {
                                     setState(() {
                                       userSelectTime = time?.format(context);
-
-                                      print(userSelectTime);
                                     });
                                   });
                                 },
@@ -160,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   });
                                 },
                               ),
-                              // dropdown button for debit or credit
+                              // dropdown button for debit or credit entry
                               DropdownButton(
                                 value: userEntry,
                                 items: [
@@ -207,6 +208,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             TextButton(
                               child: Text('Add'),
                               onPressed: () {
+                                // add transaction
+                                Provider.of<Dashboard>(context, listen: false)
+                                    .addTransaction(
+                                  Provider.of<Login>(context, listen: false)
+                                      .email,
+                                  userSelectDate ?? date,
+                                  userSelectTime ?? time,
+                                  Provider.of<Dashboard>(context, listen: false)
+                                      .userDefaultCurrency,
+                                  Provider.of<Dashboard>(context, listen: false)
+                                      .userDefaultItem,
+                                  userAmount,
+                                  userEntry,
+                                  commentTransaction,
+                                );
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -223,18 +239,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
                 },
                 child: Text('Add Transaction')),
-            ElevatedButton(
-                onPressed: () {
-                  // go back to login screen
-                  Navigator.pushNamed(context, LoginScreen.id);
-                },
-                child: Text('Logout')),
-            ElevatedButton(
-                onPressed: () {
-                  Dashboard().retrieveItems(
-                      Provider.of<Login>(context, listen: false).email);
-                },
-                child: Text('Settings')),
+            // icon button for logout
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                Navigator.pushNamed(context, LoginScreen.id);
+              },
+            ),
+            // Icon button for settings, to go to settings screen
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                // Navigator.pushNamed(context, SettingsScreen.id);
+              },
+            ),
             // elevated button
           ],
         ),

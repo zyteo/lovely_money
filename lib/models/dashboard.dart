@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends ChangeNotifier {
   String? _username;
@@ -89,6 +90,32 @@ class Dashboard extends ChangeNotifier {
         _defaultTransaction = value.data()!['default'];
         userDefaultItem = _defaultTransaction!['item'];
         userDefaultCurrency = _defaultTransaction!['currency'];
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  // function to add transaction to firebase
+  Future addTransaction(
+      email, date, time, currency, item, amount, entry, comment) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('transactions')
+          .doc(email)
+          .set({
+        DateFormat('MM-yyyy').format(DateTime.now()): [
+          {
+            // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment
+            'date': date,
+            'time': time,
+            'currency': currency,
+            'item': item,
+            'amount': amount,
+            'entry': entry,
+            'comment': comment,
+          }
+        ],
       });
     } catch (error) {
       print(error);

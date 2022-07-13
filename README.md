@@ -57,9 +57,9 @@ Models:
 
 -Transaction: date, time, item from item list (string), currency, amount, comment, entry(credit/debit)
 
--Users: email (string), username (string), saved default details [item, price, currency, entry], item list
+-Users: email (string), username (string), saved default details [item,  currency], item list
 
--Transactions --> email --> month --> list of transactions in an array
+-Transactions --> email --> month/year --> list of transactions in an array
 
 ```
 Timeline
@@ -107,6 +107,10 @@ https://stackoverflow.com/questions/58774301/when-to-use-provider-ofx-vs-consume
 Removed amount as default value as my text editing controller doesn't work properly and I realised it might be a bad UX for users - 
 
 if default value is not the user's amount, user needs to delete value before keying in, might annoy user with more keypresses.
+
+- 13 Jul: Replaced setting & logout buttons with icon buttons.
+
+Added function to add a new transaction to DB.
 
 ```
 
