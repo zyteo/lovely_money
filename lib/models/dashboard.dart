@@ -108,7 +108,7 @@ class Dashboard extends ChangeNotifier {
           .then((value) {
         if (value.data() == null) {
           FirebaseFirestore.instance.collection('transactions').doc(email).set({
-            DateFormat('MM-yyyy').format(DateTime.now()): [
+            DateFormat('MM-yyyy').format(DateTime.parse(date)): [
               {
                 // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment
                 'date': date,
@@ -126,7 +126,8 @@ class Dashboard extends ChangeNotifier {
               .collection('transactions')
               .doc(email)
               .update({
-            DateFormat('MM-yyyy').format(DateTime.now()): FieldValue.arrayUnion(
+            DateFormat('MM-yyyy').format(DateTime.parse(date)):
+                FieldValue.arrayUnion(
               [
                 {
                   // 7 inputs for the transaction - date, time, currency, item, amount, entry, comment

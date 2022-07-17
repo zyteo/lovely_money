@@ -116,6 +116,8 @@ Added function to add a new transaction to DB.
 
 Changed add transaction button to a floating action button.
 
+Edited time format to yyyy-mm-dd.
+
 ```
 
 ---

@@ -15,7 +15,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  String date = DateFormat('dd-MMM-yyyy').format(DateTime.now());
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String time = DateFormat('h:mm a').format(DateTime.now());
   var userSelectDate;
   var userSelectTime;
@@ -102,7 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 ).then((date) {
                                   setState(() {
                                     userSelectDate = date;
-                                    userSelectDate = DateFormat('dd-MMM-yyyy')
+                                    userSelectDate = DateFormat('yyyy-MM-dd')
                                         .format(userSelectDate);
                                     print(userSelectDate);
                                   });
