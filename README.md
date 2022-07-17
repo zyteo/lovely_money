@@ -112,6 +112,10 @@ if default value is not the user's amount, user needs to delete value before key
 
 Added function to add a new transaction to DB.
 
+- 17 Jul: Modified dashboard screen to have settings and logout button in the same row as text.
+
+Changed add transaction button to a floating action button.
+
 ```
 
 ---
