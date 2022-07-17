@@ -118,6 +118,8 @@ Changed add transaction button to a floating action button.
 
 Edited time format to yyyy-mm-dd.
 
+Setting up streambuilder to be displayed on main screen.
+
 ```
 
 ---
