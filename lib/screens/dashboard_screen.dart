@@ -6,6 +6,7 @@ import 'package:lovely_money/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DashboardScreen extends StatefulWidget {
   static const String id = 'dashboard_screen';
@@ -70,6 +71,204 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
             kSizedBoxLarge,
+            // Streambuilder to show the items in the transaction list for the user
+            // to be displayed in a table, including 2 buttons for edit and delete the entry
+            // use asyncsnapshot
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('transactions')
+                  .doc(Provider.of<Login>(context, listen: false).email)
+                  .collection('transactions')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                // if nothing, load first
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    // use datatable to display the transactions, total of 9 different columns
+                    // columns are the date, time, item, currency, amount, comment, entry(credit/debit), edit and delete
+                    return DataTable(
+                      columns: [
+                        DataColumn(
+                          label: Text('Date'),
+                        ),
+                        DataColumn(
+                          label: Text('Time'),
+                        ),
+                        DataColumn(
+                          label: Text('Item'),
+                        ),
+                        DataColumn(
+                          label: Text('Currency'),
+                        ),
+                        DataColumn(
+                          label: Text('Amount'),
+                        ),
+                        DataColumn(
+                          label: Text('Comment'),
+                        ),
+                        DataColumn(
+                          label: Text('Entry'),
+                        ),
+                        DataColumn(
+                          label: Text('Edit'),
+                        ),
+                        DataColumn(
+                          label: Text('Delete'),
+                        ),
+                      ],
+                      rows: snapshot.data!.docs.map((doc) {
+                        return DataRow(
+                          cells: [
+                            DataCell(
+                              Text(doc.data()!["date"]),
+                            ),
+                            DataCell(
+                              Text(doc.data()['time']),
+                            ),
+                            DataCell(
+                              Text(doc.data()['item']),
+                            ),
+                            DataCell(
+                              Text(doc.data()['currency']),
+                            ),
+                            DataCell(
+                              Text(doc.data()['amount']),
+                            ),
+                            DataCell(
+                              Text(doc.data()['comment']),
+                            ),
+                            DataCell(
+                              Text(doc.data()['entry']),
+                            ),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  // edit transaction
+                                  userSelectDate = doc.data()['date'];
+                                  userSelectTime = doc.data()['time'];
+                                  commentTransaction = doc.data()['comment'];
+                                  userEntry = doc.data()['entry'];
+                                  userAmount = doc.data()['amount'];
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Edit Transaction'),
+                                        content: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Date',
+                                              ),
+                                              onChanged: (value) {
+                                                userSelectDate = value;
+                                              },
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Time',
+                                              ),
+                                              onChanged: (value) {
+                                                userSelectTime = value;
+                                              },
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Comment',
+                                              ),
+                                              onChanged: (value) {
+                                                commentTransaction = value;
+                                              },
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Entry',
+                                              ),
+                                              onChanged: (value) {
+                                                userEntry = value;
+                                              },
+                                            ),
+                                            TextField(
+                                              decoration: InputDecoration(
+                                                labelText: 'Amount',
+                                              ),
+                                              onChanged: (value) {
+                                                userAmount = value;
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            child: Text('Cancel'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          ElevatedButton(
+                                            child: Text('Edit'),
+                                            onPressed: () {
+                                              // edit transaction
+                                              FirebaseFirestore.instance
+                                                  .collection('transactions')
+                                                  .doc(Provider.of<Login>(
+                                                          context,
+                                                          listen: false)
+                                                      .email)
+                                                  .collection('transactions')
+                                                  .doc(doc.id)
+                                                  .update({
+                                                'date': userSelectDate,
+                                                'time': userSelectTime,
+                                                'comment': commentTransaction,
+                                                'entry': userEntry,
+                                                'amount': userAmount,
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                            DataCell(
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // delete transaction
+                                  FirebaseFirestore.instance
+                                      .collection('transactions')
+                                      .doc(Provider.of<Login>(context,
+                                              listen: false)
+                                          .email)
+                                      .collection('transactions')
+                                      .doc(doc.id)
+                                      .delete();
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    );
+                  }
+                }
+              },
+            ),
+
             FloatingActionButton(
               onPressed: () {
                 // create a popup with 3 input text and a button for selecting date, along with a ok and cancel button

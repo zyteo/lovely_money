@@ -9,6 +9,7 @@ class Dashboard extends ChangeNotifier {
   Map<String, dynamic>? _defaultTransaction;
   String? _userDefaultCurrency;
   String? _userDefaultItem;
+  late Stream<QuerySnapshot> _transactions;
 
   String? get username => _username;
   String? get email => _email;
@@ -16,6 +17,7 @@ class Dashboard extends ChangeNotifier {
   Map<String, dynamic>? get defaultTransaction => _defaultTransaction;
   String? get userDefaultCurrency => _userDefaultCurrency;
   String? get userDefaultItem => _userDefaultItem;
+  Stream<QuerySnapshot> get transactions => _transactions;
 
   set username(String? value) {
     _username = value;
@@ -44,6 +46,11 @@ class Dashboard extends ChangeNotifier {
 
   set userDefaultItem(String? value) {
     _userDefaultItem = value;
+    notifyListeners();
+  }
+
+  set transactions(Stream<QuerySnapshot> value) {
+    _transactions = value;
     notifyListeners();
   }
 
@@ -147,5 +154,11 @@ class Dashboard extends ChangeNotifier {
     } catch (error) {
       print(error);
     }
+    // function to get transaction as a stream
+    final Stream<QuerySnapshot> transactions = FirebaseFirestore.instance
+        .collection('transactions')
+        .doc(email)
+        .collection(DateFormat('MM-yyyy').format(DateTime.parse(date)))
+        .snapshots();
   }
 }
