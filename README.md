@@ -120,6 +120,8 @@ Edited time format to yyyy-mm-dd.
 
 Setting up streambuilder to be displayed on main screen.
 
+- 18 Jul: Still trying to fix streambuilder.
+
 ```
 
 ---
@@ -130,4 +132,4 @@ Setting up streambuilder to be displayed on main screen.
 - [x] Login
 - [ ] Homepage
 - [ ] Settings
-- [ ] Add Transaction
+- [x] Add Transaction

@@ -74,11 +74,131 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             kSizedBoxLarge,
             // Streambuilder to show the items in the transaction list for the user
-            // to be displayed in a table, including 2 buttons for edit and delete the entry
-            // use asyncsnapshot
-            // display results in datatable
-
-           
+            // stream is from firebase firestore
+            // to be displayed in a datatable, including 2 buttons for edit and delete the entry
+            // use singlechildscrollview for the table to scroll
+            // StreamBuilder<QuerySnapshot>(
+            //   stream: FirebaseFirestore.instance
+            //       .collection('transactions')
+            //       .doc(Provider.of<Login>(context, listen: false).email)
+            //       .collection(DateFormat('MM-yyyy')
+            //           .format(DateTime.parse(date))
+            //           .toString())
+            //       .snapshots(),
+            //   builder: (BuildContext context,
+            //       AsyncSnapshot<QuerySnapshot> snapshot) {
+            //     if (!snapshot.hasData) {
+            //       return Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     }
+            //     return Expanded(
+            //       child: SingleChildScrollView(
+            //         child: DataTable(
+            //           columns: [
+            //             // total 9 columns
+            //             DataColumn(
+            //               label: Text('Date'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Time'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Item'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Currency'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Amount'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Comment'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Entry'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Edit'),
+            //             ),
+            //             DataColumn(
+            //               label: Text('Delete'),
+            //             ),
+            //           ],
+            //           rows: snapshot.data!.docs
+            //               .map((doc) => DataRow(
+            //                     cells: [
+            //                       // date
+            //                       DataCell(
+            //                         Text(doc['date']),
+            //                       ),
+            //                       // time
+            //                       DataCell(
+            //                         Text(doc['time']),
+            //                       ),
+            //                       // item
+            //                       DataCell(
+            //                         Text(doc['item']),
+            //                       ),
+            //                       // currency
+            //                       DataCell(
+            //                         Text(doc['currency']),
+            //                       ),
+            //                       // amount
+            //                       DataCell(
+            //                         Text(doc['amount']),
+            //                       ),
+            //                       // comment
+            //                       DataCell(
+            //                         Text(doc['comment']),
+            //                       ),
+            //                       // entry
+            //                       DataCell(
+            //                         Text(doc['entry']),
+            //                       ),
+            //                       // edit
+            //                       DataCell(
+            //                         IconButton(
+            //                           icon: Icon(Icons.edit),
+            //                           onPressed: () {
+            //                             userSelectDate =
+            //                                 DateFormat('yyyy-MM-dd').format(
+            //                                     DateTime.parse(
+            //                                         doc.get('date')));
+            //                             userSelectTime = DateFormat('h:mm a')
+            //                                 .format(DateTime.parse(
+            //                                     doc.get('time')));
+            //                             userEntry = doc.get('entry');
+            //                             userAmount = doc.get('amount');
+            //                             commentTransaction = doc.get('comment');
+            //                             // Navigator.pushNamed(context, 'edit_transaction');
+            //                           },
+            //                         ),
+            //                       ),
+            //                       DataCell(
+            //                         IconButton(
+            //                           icon: Icon(Icons.delete),
+            //                           onPressed: () {
+            //                             FirebaseFirestore.instance
+            //                                 .collection('transactions')
+            //                                 .doc(Provider.of<Login>(context,
+            //                                         listen: false)
+            //                                     .email)
+            //                                 .collection(DateFormat('MM-yyyy')
+            //                                     .format(DateTime.parse(date)))
+            //                                 .doc(doc.get('id'))
+            //                                 .delete();
+            //                           },
+            //                         ),
+            //                       ),
+            //                     ],
+            //                   ))
+            //               .toList(),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
 
             FloatingActionButton(
               onPressed: () {
