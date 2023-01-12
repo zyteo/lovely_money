@@ -73,10 +73,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
             kSizedBoxLarge,
+
             // Streambuilder to show the items in the transaction list for the user
             // stream is from firebase firestore
             // to be displayed in a datatable, including 2 buttons for edit and delete the entry
             // use singlechildscrollview for the table to scroll
+
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('transactions')
+                    .doc(Provider.of<Login>(context, listen: false).email)
+                    .collection(DateFormat('MM-yyyy')
+                        .format(DateTime.parse(date))
+                        .toString())
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Something went wrong');
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text("Loading");
+                  }
+                  return ListView(
+                    children: snapshot.data!.docs
+                        .map((DocumentSnapshot document) {
+                          Map<dynamic, dynamic> data =
+                              document.data()! as Map<dynamic, dynamic>;
+                          return ListTile(
+                            title: Text(data['date']),
+                            subtitle: Text(data['time']),
+                          );
+                        })
+                        .toList()
+                        .cast(),
+                  );
+                }),
             // StreamBuilder<QuerySnapshot>(
             //   stream: FirebaseFirestore.instance
             //       .collection('transactions')

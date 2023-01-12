@@ -2,6 +2,8 @@
 
 Personal budget / expenses app.
 
+### App development put on hold. No plans to continue for now since I realised I will have no use for this app.
+
 ## Description
 
 Used a mobile app for budgeting many years ago. I thought the back up worked. I backed up once in a while.
